@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "265598791082",
+    "firebase_url": "https://jeokissan-quality-manual-default-rtdb.firebaseio.com",
+    "project_id": "jeokissan-quality-manual",
+    "storage_bucket": "jeokissan-quality-manual.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265598791082:android:52322549d24c689e274fd3",
+        "android_client_info": {
+          "package_name": "com.example.jeokissan_5_tier_quality_management_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265598791082-8ind05hdsu93q6ujiub0l9fse2ms6atr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCErX3Wil1s9CrIjoBQqluQeOVuImSMOH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265598791082-8ind05hdsu93q6ujiub0l9fse2ms6atr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265598791082-4dcoh4vi4gg6jkgnqruaiq8k0grgds94.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jeokissan5TierQualityManagementSystem"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265598791082:android:d5c897f43471d70a274fd3",
+        "android_client_info": {
+          "package_name": "com.example.jeokissan_5t_quality_management_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265598791082-8ind05hdsu93q6ujiub0l9fse2ms6atr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCErX3Wil1s9CrIjoBQqluQeOVuImSMOH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265598791082-8ind05hdsu93q6ujiub0l9fse2ms6atr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265598791082-4dcoh4vi4gg6jkgnqruaiq8k0grgds94.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jeokissan5TierQualityManagementSystem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

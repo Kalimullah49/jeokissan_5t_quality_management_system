@@ -1,0 +1,67 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:jeokissan_5t_quality_management_system/firebase_options.dart';
+import 'package:jeokissan_5t_quality_management_system/login.dart';
+import 'package:jeokissan_5t_quality_management_system/register.dart';
+import 'package:jeokissan_5t_quality_management_system/home.dart';
+import 'package:jeokissan_5t_quality_management_system/splash.dart';
+import 'package:jeokissan_5t_quality_management_system/locale_provider.dart';
+import 'package:jeokissan_5t_quality_management_system/app_localizations.dart';
+import 'package:jeokissan_5t_quality_management_system/quality_manual_search.dart' as quality_search;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  final localeProvider = LocaleProvider();
+  await localeProvider.loadSavedLocale();
+
+  runApp(
+    ChangeNotifierProvider.value(
+      value: localeProvider,
+      child: const MainApp(),
+    ),
+  );
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final isUrdu = localeProvider.isUrdu;
+
+    return MaterialApp(
+      title: 'JeoKissan QMS',
+      debugShowCheckedModeBanner: false,
+      locale: localeProvider.locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ur'),
+      ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: isUrdu ? 'JameelNooriNastaleeqKasheeda' : 'Roboto',
+      ),
+      home: const SplashScreen(),
+      routes: {
+        '/splash': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/quality-manual': (context) => const quality_search.QualityManualSearch(),
+      },
+    );
+  }
+}
