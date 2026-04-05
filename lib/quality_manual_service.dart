@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 
 class QualityTierData {
   final String tier;
@@ -71,9 +72,9 @@ class QualityManualService {
 
       _isInitialized = true;
       final langName = language == 'ur' ? 'Urdu' : 'English';
-      print('Quality Manual loaded ($langName): ${_commoditiesData.length} commodities');
+      debugPrint('Quality Manual loaded ($langName): ${_commoditiesData.length} commodities');
     } catch (e) {
-      print('Error initializing Quality Manual: $e');
+      debugPrint('Error initializing Quality Manual: $e');
       rethrow;
     }
   }
@@ -115,7 +116,7 @@ class QualityManualService {
 
       return null;
     } catch (e) {
-      print('Error searching commodity: $e');
+      debugPrint('Error searching commodity: $e');
       return null;
     }
   }
@@ -143,7 +144,7 @@ class QualityManualService {
       matches.sort((a, b) => a.commodityName.compareTo(b.commodityName));
       return matches;
     } catch (e) {
-      print('Error searching commodities: $e');
+      debugPrint('Error searching commodities: $e');
       return [];
     }
   }

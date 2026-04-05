@@ -87,6 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fileNames.add(img.name);
                   }
 
+                  if (!mounted) return;
+
                   // STEP 1
                   final localeProvider = context.read<LocaleProvider>();
                   final languageCode = localeProvider.isUrdu ? 'ur' : 'en';
@@ -96,6 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     fileNames: fileNames,
                     languageCode: languageCode,
                   );
+
+                  if (!mounted) return;
 
                   if (context.mounted) Navigator.pop(context);
 
@@ -148,6 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                  questionsAndAnswers: questionsAndAnswers,
                                  languageCode: languageCode2,
                                );
+
+                               if (!context.mounted) return;
 
                                if (context.mounted) Navigator.pop(context); // dismiss loading
 
@@ -289,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             width: 60, height: 60,
             decoration: BoxDecoration(
-              color: const Color(0xFF4CAF50).withOpacity(0.1),
+              color: const Color(0xFF4CAF50).withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: const Color(0xFF4CAF50), size: 28),
@@ -401,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 10,
                                     offset: const Offset(0, 5),
                                   ),
@@ -486,7 +492,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
-                     BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, 2))
+                     BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4, offset: const Offset(0, 2))
                   ]
                 ),
                 child: Stack(

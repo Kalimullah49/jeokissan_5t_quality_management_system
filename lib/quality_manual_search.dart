@@ -6,7 +6,7 @@ import 'locale_provider.dart';
 import 'app_localizations.dart';
 
 class QualityManualSearch extends StatefulWidget {
-  const QualityManualSearch({Key? key}) : super(key: key);
+  const QualityManualSearch({super.key});
 
   @override
   State<QualityManualSearch> createState() => _QualityManualSearchState();
@@ -14,7 +14,7 @@ class QualityManualSearch extends StatefulWidget {
 
 class _QualityManualSearchState extends State<QualityManualSearch> {
   late QualityManualService _service;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   CommodityQualityData? _searchResult;
   bool _isLoading = false;
   bool _initialized = false;
@@ -193,37 +193,38 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: _commonCommodities
-                                .map((commodity) => GestureDetector(
-                                      onTap: () {
-                                        _searchController.text = commodity;
-                                        _searchCommodity(commodity);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 6,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF2C5F2D).withOpacity(0.1),
-                                          border: Border.all(
-                                            color: Color(0xFF2C5F2D),
-                                            width: 1,
+                            children: [
+                              ..._commonCommodities
+                                  .map((commodity) => GestureDetector(
+                                        onTap: () {
+                                          _searchController.text = commodity;
+                                          _searchCommodity(commodity);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 6,
                                           ),
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        child: Text(
-                                          commodity,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xFF2C5F2D),
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: localeProvider.fontFamily,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF2C5F2D).withValues(alpha: 0.1),
+                                            border: Border.all(
+                                              color: Color(0xFF2C5F2D),
+                                              width: 1,
+                                            ),
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Text(
+                                            commodity,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Color(0xFF2C5F2D),
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: localeProvider.fontFamily,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ))
-                                .toList(),
+                                      )),
+                            ],
                           ),
                           SizedBox(height: 24),
                         ],
@@ -261,10 +262,10 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                       Container(
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Color(0xFF2C5F2D).withOpacity(0.05),
+                          color: Color(0xFF2C5F2D).withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Color(0xFF2C5F2D).withOpacity(0.2),
+                            color: Color(0xFF2C5F2D).withValues(alpha: 0.2),
                           ),
                         ),
                         child: Text(
@@ -316,7 +317,7 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                                       vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: tierColors[index].withOpacity(0.15),
+                                      color: tierColors[index].withValues(alpha: 0.15),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
@@ -354,7 +355,7 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                             ),
                           ),
                         );
-                      }).toList(),
+                      }),
                     ],
                   ],
                 ),
