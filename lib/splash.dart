@@ -56,8 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.black.withValues(alpha: 0.3),
-                Colors.black.withValues(alpha: 0.5),
+                Colors.black.withOpacity(0.3),
+                Colors.black.withOpacity(0.5),
               ],
             ),
           ),
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.3),
+                        color: Colors.black.withOpacity(0.3),
                         blurRadius: 15,
                         spreadRadius: 2,
                         offset: const Offset(0, 5),

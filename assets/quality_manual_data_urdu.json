@@ -1,5 +1,5 @@
 {
-  "Sindhri": {
+  "Mango Sindhri": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -23,7 +23,7 @@
       }
     ]
   },
-  "Anwar Ratol": {
+  "Mango Anwar Ratol": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -47,7 +47,7 @@
       }
     ]
   },
-  "Langra": {
+  "Mango Langra": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -71,7 +71,7 @@
       }
     ]
   },
-  "Saroli": {
+  "Mango Saroli": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -95,7 +95,7 @@
       }
     ]
   },
-  "Fajri": {
+  "Mango Fajri": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -119,7 +119,7 @@
       }
     ]
   },
-  "Dussheri": {
+  "Mango Dussheri": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -143,7 +143,7 @@
       }
     ]
   },
-  "Azeem Chaunsa": {
+  "Mango Azeem Chaunsa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -167,7 +167,7 @@
       }
     ]
   },
-  "Safaid Chaunsa": {
+  "Mango Safaid Chaunsa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -191,7 +191,7 @@
       }
     ]
   },
-  "Gulab Khas": {
+  "Mango Gulab Khas": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -215,7 +215,7 @@
       }
     ]
   },
-  "Kala Kulu": {
+  "Apple Kala Kulu": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -239,7 +239,7 @@
       }
     ]
   },
-  "Amri": {
+  "Apple Amri": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -263,7 +263,7 @@
       }
     ]
   },
-  "Red Delicious": {
+  "Apple Red Delicious": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -287,7 +287,7 @@
       }
     ]
   },
-  "Golden Delicious": {
+  "Apple Golden Delicious": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -311,7 +311,7 @@
       }
     ]
   },
-  "Rajapuri": {
+  "Banana Rajapuri": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -335,7 +335,7 @@
       }
     ]
   },
-  "Red Banana": {
+  "Banana Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -359,7 +359,7 @@
       }
     ]
   },
-  "Barsai banana": {
+  "Banana Barsai": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -383,7 +383,7 @@
       }
     ]
   },
-  "Kinnow (Mandarin)": {
+  "Orange Kinnow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -407,7 +407,7 @@
       }
     ]
   },
-  "Blood Orange": {
+  "Orange Blood": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -431,7 +431,7 @@
       }
     ]
   },
-  "Malta": {
+  "Orange Malta": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -455,7 +455,7 @@
       }
     ]
   },
-  "Fruiter": {
+  "Orange Fruiter": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -479,7 +479,7 @@
       }
     ]
   },
-  "Red Fleshed Guava": {
+  "Guava Red Fleshed": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -503,7 +503,7 @@
       }
     ]
   },
-  "Lalit": {
+  "Guava Lalit": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -527,7 +527,7 @@
       }
     ]
   },
-  "Desi": {
+  "Pomegranate Desi": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -551,7 +551,7 @@
       }
     ]
   },
-  "Bhagwa": {
+  "Pomegranate Bhagwa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -575,7 +575,7 @@
       }
     ]
   },
-  "Elberta": {
+  "Peach Elberta": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -599,7 +599,7 @@
       }
     ]
   },
-  "Redhaven": {
+  "Peach Redhaven": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -623,7 +623,7 @@
       }
     ]
   },
-  "Florida King": {
+  "Peach Florida King": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -647,7 +647,7 @@
       }
     ]
   },
-  "Halman": {
+  "Apricot Halman": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -671,7 +671,7 @@
       }
     ]
   },
-  "Shakarpara": {
+  "Apricot Shakarpara": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -695,7 +695,7 @@
       }
     ]
   },
-  "Moorpark": {
+  "Apricot Moorpark": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -719,7 +719,7 @@
       }
     ]
   },
-  "Santa Rosa": {
+  "Plum Santa Rosa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -743,7 +743,7 @@
       }
     ]
   },
-  "Black Amber": {
+  "Plum Black Amber": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -767,7 +767,7 @@
       }
     ]
   },
-  "Burbank": {
+  "Plum Burbank": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -791,7 +791,7 @@
       }
     ]
   },
-  "Bartlett": {
+  "Pear Bartlett": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -815,7 +815,7 @@
       }
     ]
   },
-  "Le Conte": {
+  "Pear Le Conte": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -839,7 +839,7 @@
       }
     ]
   },
-  "White Pear": {
+  "Pear White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -863,7 +863,7 @@
       }
     ]
   },
-  "Thompson Seedless": {
+  "Grapes Thompson Seedless": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -887,7 +887,7 @@
       }
     ]
   },
-  "Sultana": {
+  "Grapes Sultana": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -911,7 +911,7 @@
       }
     ]
   },
-  "King’s Ruby": {
+  "Grapes King’s Ruby": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -935,7 +935,7 @@
       }
     ]
   },
-  "Sugar Baby": {
+  "Watermelon Sugar Baby": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -959,7 +959,7 @@
       }
     ]
   },
-  "Crimson Sweet": {
+  "Watermelon Crimson Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -983,7 +983,7 @@
       }
     ]
   },
-  "Charleston Gray": {
+  "Watermelon Charleston Gray": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1007,7 +1007,7 @@
       }
     ]
   },
-  "Galia": {
+  "Melon Galia": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1031,7 +1031,7 @@
       }
     ]
   },
-  "Cantaloupe": {
+  "Melon Cantaloupe": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1055,7 +1055,7 @@
       }
     ]
   },
-  "Korean Melon": {
+  "Melon Korean": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1079,7 +1079,7 @@
       }
     ]
   },
-  "Bombai": {
+  "Lychee Bombai": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1103,7 +1103,7 @@
       }
     ]
   },
-  "Shahi": {
+  "Lychee Shahi": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1127,7 +1127,7 @@
       }
     ]
   },
-  "China": {
+  "Lychee China": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1151,7 +1151,7 @@
       }
     ]
   },
-  "Solo": {
+  "Papaya Solo": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1175,7 +1175,7 @@
       }
     ]
   },
-  "Red Lady": {
+  "Papaya Red Lady": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1199,7 +1199,7 @@
       }
     ]
   },
-  "Aseel": {
+  "Dates Aseel": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1223,7 +1223,7 @@
       }
     ]
   },
-  "Ajwa": {
+  "Dates Ajwa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1247,7 +1247,7 @@
       }
     ]
   },
-  "Medjool": {
+  "Dates Medjool": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1271,7 +1271,7 @@
       }
     ]
   },
-  "Barhi": {
+  "Dates Barhi": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1295,7 +1295,7 @@
       }
     ]
   },
-  "Chandler": {
+  "Strawberry Chandler": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1319,7 +1319,7 @@
       }
     ]
   },
-  "Camarosa": {
+  "Strawberry Camarosa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1343,7 +1343,7 @@
       }
     ]
   },
-  "Sweet Charlie": {
+  "Strawberry Sweet Charlie": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1367,7 +1367,7 @@
       }
     ]
   },
-  "Queen": {
+  "Pineapple Queen": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1391,7 +1391,7 @@
       }
     ]
   },
-  "Red Spanish": {
+  "Pineapple Red Spanish": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1415,7 +1415,7 @@
       }
     ]
   },
-  "Brown Turkey": {
+  "Fig Brown Turkey": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1439,7 +1439,7 @@
       }
     ]
   },
-  "Celeste": {
+  "Fig Celeste": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1487,7 +1487,7 @@
       }
     ]
   },
-  "White Mulberry": {
+  "Mulberry White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1511,7 +1511,7 @@
       }
     ]
   },
-  "Red Mulberry": {
+  "Mulberry Red Mulberry": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1535,7 +1535,7 @@
       }
     ]
   },
-  "Black Mulberry": {
+  "Mulberry Black Mulberry": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1559,7 +1559,7 @@
       }
     ]
   },
-  "Advance": {
+  "Loquat Advance": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1583,7 +1583,7 @@
       }
     ]
   },
-  "Champagne": {
+  "Loquat Champagne": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1607,7 +1607,7 @@
       }
     ]
   },
-  "Bing": {
+  "Cherry Bing": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1631,7 +1631,7 @@
       }
     ]
   },
-  "Rainier": {
+  "Cherry Rainier": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1655,7 +1655,7 @@
       }
     ]
   },
-  "Stella": {
+  "Cherry Stella": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1679,7 +1679,7 @@
       }
     ]
   },
-  "Apple Ber": {
+  "Jujube Apple Ber": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1703,7 +1703,7 @@
       }
     ]
   },
-  "King Coconut": {
+  "Coconut King": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1727,7 +1727,7 @@
       }
     ]
   },
-  "Dwarf Coconut": {
+  "Coconut Dwarf": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1751,7 +1751,7 @@
       }
     ]
   },
-  "fresh Coconut": {
+  "Coconut fresh": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1775,7 +1775,7 @@
       }
     ]
   },
-  "Hayward": {
+  "Kiwi Hayward": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1799,7 +1799,7 @@
       }
     ]
   },
-  "Blake": {
+  "Kiwi Blake": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1823,7 +1823,7 @@
       }
     ]
   },
-  "Ben Lomond,": {
+  "Blackcurrant Ben Lomond,": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1847,7 +1847,7 @@
       }
     ]
   },
-  "Caroline": {
+  "Raspberry Caroline": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1871,7 +1871,7 @@
       }
     ]
   },
-  "Heritage": {
+  "Raspberry Heritage": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1895,7 +1895,7 @@
       }
     ]
   },
-  "Bluecrop": {
+  "Blueberry Bluecrop": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1919,7 +1919,7 @@
       }
     ]
   },
-  "Duke": {
+  "Blueberry Duke": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1943,7 +1943,7 @@
       }
     ]
   },
-  "Mission": {
+  "Olive Mission": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1967,7 +1967,7 @@
       }
     ]
   },
-  "Manzanilla": {
+  "Olive Manzanilla": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -1991,7 +1991,7 @@
       }
     ]
   },
-  "Vulgaris": {
+  "Barberry Vulgaris": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2015,7 +2015,7 @@
       }
     ]
   },
-  "Florida Sweet": {
+  "Acerola Florida Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2039,7 +2039,7 @@
       }
     ]
   },
-  "Yellow Santol": {
+  "Santol Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2063,7 +2063,7 @@
       }
     ]
   },
-  "Duncan": {
+  "Grapefruit Duncan": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2087,7 +2087,7 @@
       }
     ]
   },
-  "Mash-Seedless": {
+  "Grapefruit Mash-Seedless": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2111,7 +2111,7 @@
       }
     ]
   },
-  "Eureka": {
+  "Lemon Eureka": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2135,7 +2135,7 @@
       }
     ]
   },
-  "Lisbon": {
+  "Lemon Lisbon": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2159,7 +2159,7 @@
       }
     ]
   },
-  "Sweet": {
+  "Lemon Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2183,7 +2183,7 @@
       }
     ]
   },
-  "Kaghzi": {
+  "Lemon Kaghzi": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2207,7 +2207,7 @@
       }
     ]
   },
-  "Persian Sweet Lime(Mosambi)": {
+  "Lemon Persian Sweet Lime(Mosambi)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2231,7 +2231,7 @@
       }
     ]
   },
-  "Banarasi": {
+  "AmlaBanarasi": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2327,7 +2327,7 @@
       }
     ]
   },
-  "Custard Apple(Sita fruit-sindh) OR (Sharifa-punjab)": {
+  "Custard Apple(Sita fruit-sindh)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2351,7 +2351,7 @@
       }
     ]
   },
-  "Hylocereus undatus": {
+  "Dragon Hylocereus undatus": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2375,7 +2375,7 @@
       }
     ]
   },
-  "Hylocereus\ncostaricensis\n(Red-fleshed Dragon Fruit)": {
+  "Dragon Hylocereus costaricensis (Red-fleshed Dragon Fruit)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2399,7 +2399,7 @@
       }
     ]
   },
-  "Hylocereus \nmegalanthus \n(Yellow-fleshed Dragon Fruit)": {
+  "Dragon Hylocereus megalanthus \n(Yellow-fleshed Dragon Fruit)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2423,7 +2423,7 @@
       }
     ]
   },
-  "Jackfruit(kathal)": {
+  "Jackfruit (kathal)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2447,7 +2447,7 @@
       }
     ]
   },
-  "Java Plum(Jamun)": {
+  "Java Plum (Jamun)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2471,7 +2471,7 @@
       }
     ]
   },
-  "Red persimmon\n(Soor Amlok)": {
+  "Persimmon Red persimmon\n(Soor Amlok)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2495,7 +2495,7 @@
       }
     ]
   },
-  "Tor amlok": {
+  "Persimmon Tor amlok": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2519,7 +2519,7 @@
       }
     ]
   },
-  "Nagami Kumquats": {
+  "Kumquats Nagami": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2543,7 +2543,7 @@
       }
     ]
   },
-  "Meiwa kumquats": {
+  "Kumquats Meiwa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2591,7 +2591,7 @@
       }
     ]
   },
-  "Tamarind(imli)": {
+  "Tamarind": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2671,7 +2671,7 @@
       }
     ]
   },
-  "Red": {
+  "potato Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2695,7 +2695,7 @@
       }
     ]
   },
-  "Purple Majesty": {
+  "potato Majesty": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2719,7 +2719,7 @@
       }
     ]
   },
-  "Orange Sweet Potato": {
+  "potato Orange Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2743,7 +2743,7 @@
       }
     ]
   },
-  "Roma Tomatoes": {
+  "Tomatoes Roma": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2767,7 +2767,7 @@
       }
     ]
   },
-  "Cherry Tomatoes,": {
+  "Tomatoes Cherry": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2791,7 +2791,7 @@
       }
     ]
   },
-  "Grape Tomatoes,": {
+  "Tomatoes Grape": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2815,7 +2815,7 @@
       }
     ]
   },
-  "Plum Tomatoes,": {
+  "Tomato Plum": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2835,7 +2835,7 @@
       }
     ]
   },
-  "Yellow and Orange Tomatoes": {
+  "Tomato Yellow and Orange": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2859,7 +2859,7 @@
       }
     ]
   },
-  "Green Tomatoes": {
+  "Tomato Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2883,7 +2883,7 @@
       }
     ]
   },
-  "Red Onion": {
+  "Onion Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2907,7 +2907,7 @@
       }
     ]
   },
-  "White Onion": {
+  "Onion White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2931,7 +2931,7 @@
       }
     ]
   },
-  "Yellow Onion": {
+  "Onion Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -2955,7 +2955,7 @@
       }
     ]
   },
-  "Spring Onion": {
+  "Onion Spring": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3003,7 +3003,7 @@
       }
     ]
   },
-  "Hardneck Garlic": {
+  "Garlic Hardneck": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3027,7 +3027,7 @@
       }
     ]
   },
-  "Softneck Garlic": {
+  "Garlic Softneck": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3051,7 +3051,7 @@
       }
     ]
   },
-  "Elephant Garlic": {
+  "Garlic Elephant": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3075,7 +3075,7 @@
       }
     ]
   },
-  "Green Garlic": {
+  "Garlic Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3099,7 +3099,7 @@
       }
     ]
   },
-  "Young Ginger": {
+  "Ginger Young": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3123,7 +3123,7 @@
       }
     ]
   },
-  "Mature Ginger": {
+  "Ginger Mature": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3147,7 +3147,7 @@
       }
     ]
   },
-  "White Cauliflower": {
+  "Cauliflower White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3171,7 +3171,7 @@
       }
     ]
   },
-  "Purple Cauliflower": {
+  "Cauliflower Purple": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3195,7 +3195,7 @@
       }
     ]
   },
-  "Green Cauliflower": {
+  "Cauliflower Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3219,7 +3219,7 @@
       }
     ]
   },
-  "Green Cabbage": {
+  "Cabbage Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3243,7 +3243,7 @@
       }
     ]
   },
-  "Red Cabbage": {
+  "Cabbage Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3267,7 +3267,7 @@
       }
     ]
   },
-  "Savoy Cabbage": {
+  "Cabbage Savoy": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3291,7 +3291,7 @@
       }
     ]
   },
-  "Napa Cabbage": {
+  "Cabbage Napa": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3315,7 +3315,7 @@
       }
     ]
   },
-  "Pointed Cabbage": {
+  "Cabbage Pointed": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3339,7 +3339,7 @@
       }
     ]
   },
-  "Globe Eggplant": {
+  "Eggplant Globe": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3363,7 +3363,7 @@
       }
     ]
   },
-  "Thai Eggplant": {
+  "Eggplant Thai": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3387,7 +3387,7 @@
       }
     ]
   },
-  "White Eggplant": {
+  "Eggplant White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3411,7 +3411,7 @@
       }
     ]
   },
-  "Green Okra": {
+  "Ladyfinger Okra Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3435,7 +3435,7 @@
       }
     ]
   },
-  "Red Okra": {
+  "Ladyfinger Okra Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3459,7 +3459,7 @@
       }
     ]
   },
-  "Orange Carrot": {
+  "Carrot Orange": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3483,7 +3483,7 @@
       }
     ]
   },
-  "Purple Carrot": {
+  "Carrot Purple": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3507,7 +3507,7 @@
       }
     ]
   },
-  "Yellow Carrot": {
+  "Carrot Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3531,7 +3531,7 @@
       }
     ]
   },
-  "Red Carrot": {
+  "Carrot Red Carrot": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3555,7 +3555,7 @@
       }
     ]
   },
-  "White Radish": {
+  "Radish White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3579,7 +3579,7 @@
       }
     ]
   },
-  "Red Radish": {
+  "Radish Red": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3603,7 +3603,7 @@
       }
     ]
   },
-  "Purple-Top Turnip": {
+  "Turnip Purple": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3627,7 +3627,7 @@
       }
     ]
   },
-  "White Turnip": {
+  "Turnip White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3651,7 +3651,7 @@
       }
     ]
   },
-  "Yellow Turni": {
+  "Turnip Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3675,7 +3675,7 @@
       }
     ]
   },
-  "Green Peas": {
+  "Peas Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3699,7 +3699,7 @@
       }
     ]
   },
-  "Snow Peas": {
+  "Peas Snow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3723,7 +3723,7 @@
       }
     ]
   },
-  "Snap Peas": {
+  "Peas Snap": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3771,7 +3771,7 @@
       }
     ]
   },
-  "Chinese Bitter Gourd": {
+  "Bitter Gourd Chinese": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3795,7 +3795,7 @@
       }
     ]
   },
-  "Round Bottle Gourd": {
+  "Bottle Gourd Round": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3819,7 +3819,7 @@
       }
     ]
   },
-  "Long Bottle Gourd": {
+  "Bottle Gourd Long": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3843,7 +3843,7 @@
       }
     ]
   },
-  "ugar Pumpkin": {
+  "Pumpkin ugar": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3867,7 +3867,7 @@
       }
     ]
   },
-  "Carving Pumpkin": {
+  "Pumpkin Carving": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3891,7 +3891,7 @@
       }
     ]
   },
-  "White Pumpki": {
+  "Pumpkin White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3915,7 +3915,7 @@
       }
     ]
   },
-  "Pickling Cucumber": {
+  "Cucumber Pickling": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3939,7 +3939,7 @@
       }
     ]
   },
-  "English Cucumber": {
+  "Cucumber English": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3963,7 +3963,7 @@
       }
     ]
   },
-  "Long Green Chili": {
+  "Green Chili Long": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -3987,7 +3987,7 @@
       }
     ]
   },
-  ".Fresh Fenugreek": {
+  "Fenugreek Fresh": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4011,7 +4011,7 @@
       }
     ]
   },
-  ".Dried Fenugreek": {
+  "Fenugreek Dried": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4035,7 +4035,7 @@
       }
     ]
   },
-  "Savoy Spinach:": {
+  "Spinach Savoy": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4059,7 +4059,7 @@
       }
     ]
   },
-  "Malabar Spinach": {
+  "Spinach Malabar": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4083,7 +4083,7 @@
       }
     ]
   },
-  "Flat Leaf Spinach:": {
+  "Spinach Flat Leaf": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4179,7 +4179,7 @@
       }
     ]
   },
-  "Taro(arbi)": {
+  "Taro": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4371,7 +4371,7 @@
       }
     ]
   },
-  "Sweet Basil": {
+  "Basil Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4395,7 +4395,7 @@
       }
     ]
   },
-  "Thai Basil": {
+  "Basil Thai": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4419,7 +4419,7 @@
       }
     ]
   },
-  "Holy Basil": {
+  "Basil Holy": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4467,7 +4467,7 @@
       }
     ]
   },
-  "Black": {
+  "Cardamom Black": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4491,7 +4491,7 @@
       }
     ]
   },
-  "Green": {
+  "Cardamom Green": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4587,7 +4587,7 @@
       }
     ]
   },
-  "Murraya koenigii": {
+  "Curry Murraya koenigii": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4611,7 +4611,7 @@
       }
     ]
   },
-  "Black Cumin (Kala Jeera)": {
+  "Cumin Black (Kala Jeera)": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4635,7 +4635,7 @@
       }
     ]
   },
-  "White Cumin": {
+  "Cumin White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4659,7 +4659,7 @@
       }
     ]
   },
-  "Sweet Fennel": {
+  "Fennel Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4683,7 +4683,7 @@
       }
     ]
   },
-  "Florence Fennel": {
+  "Fennel Florence": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4731,7 +4731,7 @@
       }
     ]
   },
-  "Common Dill": {
+  "Dill Common": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4755,7 +4755,7 @@
       }
     ]
   },
-  "Bouquet Dill": {
+  "Dill Bouquet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4779,7 +4779,7 @@
       }
     ]
   },
-  "Sweet Tamarind": {
+  "Tamarind Sweet": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4803,7 +4803,7 @@
       }
     ]
   },
-  "Common Thyme": {
+  "Thyme Common": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4827,7 +4827,7 @@
       }
     ]
   },
-  "Lemon Thyme": {
+  "Thyme Lemon": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4851,7 +4851,7 @@
       }
     ]
   },
-  "Mediterranean Oregano": {
+  "Oregano Mediterranean": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4875,7 +4875,7 @@
       }
     ]
   },
-  "Mexican Oregano": {
+  "Oregano Mexican": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4899,7 +4899,7 @@
       }
     ]
   },
-  "French Tarragon": {
+  "Tarragon French": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4923,7 +4923,7 @@
       }
     ]
   },
-  "————": {
+  "Russian Tarragon": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4947,7 +4947,7 @@
       }
     ]
   },
-  "Red Chilies": {
+  "Chili Dried": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -4995,7 +4995,7 @@
       }
     ]
   },
-  "Whole Dried Ginger": {
+  "Ginger Whole": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5043,7 +5043,7 @@
       }
     ]
   },
-  "Yellow Turmeric": {
+  "Tumeric Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5067,7 +5067,7 @@
       }
     ]
   },
-  "Common Sage": {
+  "Sage Common": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5091,7 +5091,7 @@
       }
     ]
   },
-  "Golden Sage": {
+  "Sage Golden": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5115,7 +5115,7 @@
       }
     ]
   },
-  "Citronella Lemongrass": {
+  "Lemongrass Citronella": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5139,7 +5139,7 @@
       }
     ]
   },
-  "West Indian Lemongrass": {
+  "Lemongrass West Indian Lemongrass": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5163,7 +5163,7 @@
       }
     ]
   },
-  "Black Poppy Seeds": {
+  "Poppy Seed Black": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5187,7 +5187,7 @@
       }
     ]
   },
-  "White Poppy Seeds": {
+  "Poppy Seeds White": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5211,7 +5211,7 @@
       }
     ]
   },
-  "Blue Poppy Seeds": {
+  "Poppy Seeds Blue": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5235,7 +5235,7 @@
       }
     ]
   },
-  "Wild Lemon Balm": {
+  "Lemon Wild": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5259,7 +5259,7 @@
       }
     ]
   },
-  "Common Lemon Balm": {
+  "Lemon Balm Common": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5283,7 +5283,7 @@
       }
     ]
   },
-  "Spearmint": {
+  "Mint Spearmint": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5307,7 +5307,7 @@
       }
     ]
   },
-  "Peppermint": {
+  "Mint Peppermint": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5331,7 +5331,7 @@
       }
     ]
   },
-  "Wild": {
+  "Mint Wild": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5355,7 +5355,7 @@
       }
     ]
   },
-  "Yellow": {
+  "Mustard Seed Yellow": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5379,7 +5379,7 @@
       }
     ]
   },
-  "Brown": {
+  "Mustard Seed Brown": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5475,7 +5475,7 @@
       }
     ]
   },
-  "Iranian Saffron": {
+  "Saffron Iranian": {
     "tiers": [
       {
         "tier": "Excellent",
@@ -5499,7 +5499,7 @@
       }
     ]
   },
-  "Spanish Saffron:": {
+  "Saffron Spanish": {
     "tiers": [
       {
         "tier": "Excellent",

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'quality_manual_service.dart';
 import 'locale_provider.dart';
 import 'app_localizations.dart';
+import 'commodity_name_mapping.dart';
 
 class QualityManualSearch extends StatefulWidget {
   const QualityManualSearch({super.key});
@@ -20,13 +21,15 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
   bool _initialized = false;
   String? _error;
   String _lastLanguage = 'en';
+  List<String> _suggestions = [];
+  bool _showSuggestions = false;
 
   final List<String> _commonCommodities = [
-    'Sindhri',
-    'Chaunsa',
-    'Anwar Ratol',
-    'Dasheri',
-    'Langra',
+    'Mango Sindhri',
+    'Mango Chaunsa',
+    'Apple Amri',
+    'Banana Rajapuri',
+    'Tomato',
   ];
 
   @override
@@ -73,13 +76,31 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
     if (commodityName.isEmpty) {
       setState(() {
         _searchResult = null;
+        _showSuggestions = false;
+        _suggestions = [];
       });
       return;
     }
 
+    // Show suggestions for all related commodities
+    final suggestions = CommodityNameMapping.searchCommodities(commodityName);
+    setState(() {
+      _suggestions = suggestions;
+      _showSuggestions = suggestions.isNotEmpty;
+    });
+
+    // If exact match found, search immediately
+    if (suggestions.contains(commodityName)) {
+      _performSearch(commodityName);
+    }
+  }
+
+  Future<void> _performSearch(String commodityName) async {
     setState(() {
       _isLoading = true;
       _error = null;
+      _showSuggestions = false;
+      _searchController.text = commodityName;
     });
 
     try {
@@ -103,6 +124,67 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  /// Builds formatted attributes with bold attribute names
+  Widget _buildFormattedAttributes(String attributes, String fontFamily) {
+    final lines = attributes.split('\n');
+    final textSpans = <TextSpan>[];
+
+    for (int i = 0; i < lines.length; i++) {
+      final line = lines[i].trim();
+      
+      if (line.isEmpty) continue;
+
+      final colonIndex = line.indexOf(':');
+      if (colonIndex > 0) {
+        // Attribute name (before colon) - bold
+        textSpans.add(TextSpan(
+          text: line.substring(0, colonIndex + 1),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.grey[800],
+            fontSize: 13,
+            fontFamily: fontFamily,
+          ),
+        ));
+        // Attribute value (after colon) - normal weight
+        textSpans.add(TextSpan(
+          text: line.substring(colonIndex + 1),
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: Colors.grey[800],
+            fontSize: 13,
+            fontFamily: fontFamily,
+          ),
+        ));
+      } else {
+        // No colon found, display as is
+        textSpans.add(TextSpan(
+          text: line,
+          style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 13,
+            fontFamily: fontFamily,
+          ),
+        ));
+      }
+
+      // Add newline if not the last line
+      if (i < lines.length - 1) {
+        textSpans.add(TextSpan(text: '\n'));
+      }
+    }
+
+    return RichText(
+      text: TextSpan(
+        children: textSpans,
+        style: TextStyle(
+          height: 1.6,
+          color: Colors.grey[800],
+        ),
+      ),
+    );
   }
 
   @override
@@ -173,6 +255,54 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                       ),
                       style: TextStyle(fontFamily: localeProvider.fontFamily),
                     ),
+                    
+                    // Suggestions Dropdown
+                    if (_showSuggestions && _suggestions.isNotEmpty)
+                      Material(
+                        elevation: 8,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              top: BorderSide(color: Colors.grey[200]!),
+                            ),
+                          ),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: 300,
+                            ),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _suggestions.length,
+                              itemBuilder: (context, index) {
+                                final suggestion = _suggestions[index];
+                                final urduName = localeProvider.isUrdu
+                                    ? CommodityNameMapping.getUrduName(suggestion)
+                                    : suggestion;
+
+                                return ListTile(
+                                  title: Text(
+                                    urduName,
+                                    style: TextStyle(
+                                      fontFamily: localeProvider.fontFamily,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  leading: Icon(
+                                    Icons.shopping_basket,
+                                    color: Color(0xFF2C5F2D),
+                                    size: 18,
+                                  ),
+                                  onTap: () {
+                                    _performSearch(suggestion);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    
                     SizedBox(height: 24),
 
                     // Quick Search Commodities
@@ -193,38 +323,37 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: [
-                              ..._commonCommodities
-                                  .map((commodity) => GestureDetector(
-                                        onTap: () {
-                                          _searchController.text = commodity;
-                                          _searchCommodity(commodity);
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 12,
-                                            vertical: 6,
+                            children: _commonCommodities
+                                .map((commodity) => GestureDetector(
+                                      onTap: () {
+                                        _searchController.text = commodity;
+                                        _searchCommodity(commodity);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 6,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF2C5F2D).withOpacity(0.1),
+                                          border: Border.all(
+                                            color: Color(0xFF2C5F2D),
+                                            width: 1,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF2C5F2D).withValues(alpha: 0.1),
-                                            border: Border.all(
-                                              color: Color(0xFF2C5F2D),
-                                              width: 1,
-                                            ),
-                                            borderRadius: BorderRadius.circular(20),
-                                          ),
-                                          child: Text(
-                                            commodity,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xFF2C5F2D),
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: localeProvider.fontFamily,
-                                            ),
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                          commodity,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xFF2C5F2D),
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: localeProvider.fontFamily,
                                           ),
                                         ),
-                                      )),
-                            ],
+                                      ),
+                                    ))
+                                .toList(),
                           ),
                           SizedBox(height: 24),
                         ],
@@ -262,10 +391,10 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                       Container(
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Color(0xFF2C5F2D).withValues(alpha: 0.05),
+                          color: Color(0xFF2C5F2D).withOpacity(0.05),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Color(0xFF2C5F2D).withValues(alpha: 0.2),
+                            color: Color(0xFF2C5F2D).withOpacity(0.2),
                           ),
                         ),
                         child: Text(
@@ -317,7 +446,7 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                                       vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: tierColors[index].withValues(alpha: 0.15),
+                                      color: tierColors[index].withOpacity(0.15),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
@@ -341,14 +470,9 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                                     ),
                                   ),
                                   SizedBox(height: 8),
-                                  Text(
+                                  _buildFormattedAttributes(
                                     tier.attributes,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey[800],
-                                      height: 1.6,
-                                      fontFamily: localeProvider.fontFamily,
-                                    ),
+                                    localeProvider.fontFamily,
                                   ),
                                 ],
                               ),
