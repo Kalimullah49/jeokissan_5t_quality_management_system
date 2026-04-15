@@ -72,8 +72,8 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
     }
   }
 
-  Future<void> _searchCommodity(String commodityName) async {
-    if (commodityName.isEmpty) {
+  Future<void> _searchCommodity(String searchQuery) async {
+    if (searchQuery.isEmpty) {
       setState(() {
         _searchResult = null;
         _showSuggestions = false;
@@ -82,16 +82,48 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
       return;
     }
 
-    // Show suggestions for all related commodities
-    final suggestions = CommodityNameMapping.searchCommodities(commodityName);
+    final localeProvider = context.read<LocaleProvider>();
+    final allCommodities = CommodityNameMapping.getAllCommodities();
+    final suggestions = <String>[];
+
+    if (localeProvider.isUrdu) {
+      // Urdu search - search by both English commodity names and Urdu translations
+      for (final commodity in allCommodities) {
+        final urduName = CommodityNameMapping.getUrduName(commodity);
+        
+        // Check if either English name or Urdu name contains the search query
+        if (urduName.contains(searchQuery) || 
+            commodity.toLowerCase().contains(searchQuery.toLowerCase())) {
+          suggestions.add(commodity);
+          if (suggestions.length >= 10) break; // Limit to 10
+        }
+      }
+    } else {
+      // English search - use the optimized search function
+      final searchResults = CommodityNameMapping.searchCommodities(searchQuery);
+      suggestions.addAll(searchResults);
+    }
+
     setState(() {
       _suggestions = suggestions;
       _showSuggestions = suggestions.isNotEmpty;
     });
 
-    // If exact match found, search immediately
-    if (suggestions.contains(commodityName)) {
-      _performSearch(commodityName);
+    // Auto-search on exact match
+    if (suggestions.isNotEmpty) {
+      final firstSuggestion = suggestions[0];
+      final urduName = CommodityNameMapping.getUrduName(firstSuggestion);
+      
+      // Check if it's an exact match
+      if (localeProvider.isUrdu) {
+        if (urduName == searchQuery) {
+          _performSearch(firstSuggestion);
+        }
+      } else {
+        if (firstSuggestion.toLowerCase() == searchQuery.toLowerCase()) {
+          _performSearch(firstSuggestion);
+        }
+      }
     }
   }
 

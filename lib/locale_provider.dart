@@ -8,7 +8,7 @@ class LocaleProvider extends ChangeNotifier {
   Locale get locale => _locale;
 
   bool get isUrdu => _locale.languageCode == 'ur';
-  String get fontFamily => isUrdu ? 'JameelNooriNastaleeqKasheeda' : 'Roboto';
+  String get fontFamily => isUrdu ? 'JameelNooriNastaleeq' : 'Roboto';
 
   /// Call this once at app startup to load saved locale from SharedPreferences
   Future<void> loadSavedLocale() async {

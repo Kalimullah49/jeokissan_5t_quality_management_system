@@ -355,7 +355,7 @@ class AppLocalizations {
   String _t(String en, String ur) => _lang == 'ur' ? ur : en;
 
   // Font families for each language
-  String get fontFamily => isUrdu ? 'JameelNooriNastaleeqKasheeda' : 'Roboto';
+  String get fontFamily => isUrdu ? 'JameelNooriNastaleeq' : 'Roboto';
 }
 
 // ============================================

@@ -52,6 +52,6 @@ flutter:
     - assets/quality_manual_data_urdu.json
 
   fonts:
-    - family: JameelNooriNastaleeqKasheeda
+    - family: JameelNooriNastaleeq
       fonts:
-        - asset: assets/fonts/JameelNooriNastaleeqKasheeda.ttf
+        - asset: assets/fonts/Jameel Noori Nastaleeq Regular - [UrduFonts.com].ttf

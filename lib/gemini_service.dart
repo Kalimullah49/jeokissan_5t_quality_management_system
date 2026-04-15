@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
@@ -113,16 +114,31 @@ class GeminiClassificationService {
   /// Parse JSON from text, extracting valid JSON if wrapped in other content
   static Map<String, dynamic> _parseJson(String text) {
     try {
-      return json.decode(text) as Map<String, dynamic>;
-    } catch (_) {
+      print('📝 Parsing response text (length: ${text.length})');
+      final result = json.decode(text) as Map<String, dynamic>;
+      print('✅ JSON parsed successfully');
+      return result;
+    } catch (e) {
+      print('⚠️ Initial JSON parse failed: $e');
       // Try to extract JSON from markdown code blocks or mixed content
       final firstBrace = text.indexOf('{');
       final lastBrace = text.lastIndexOf('}');
       if (firstBrace != -1 && lastBrace > firstBrace) {
         final jsonStr = text.substring(firstBrace, lastBrace + 1);
-        return json.decode(jsonStr) as Map<String, dynamic>;
+        print('🔍 Extracting JSON from position $firstBrace to $lastBrace');
+        try {
+          final result = json.decode(jsonStr) as Map<String, dynamic>;
+          print('✅ JSON extracted and parsed successfully');
+          return result;
+        } catch (e2) {
+          print('❌ Extracted JSON still invalid: $e2');
+          print('Extracted text: $jsonStr');
+          throw Exception('Failed to parse extracted JSON: $e2');
+        }
       }
-      throw Exception('Failed to parse response: $text');
+      print('❌ No JSON found in response');
+      print('Response text preview: ${text.substring(0, min(500, text.length))}...');
+      throw Exception('Failed to parse response: No JSON found');
     }
   }
 
@@ -437,7 +453,11 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
       throw Exception('Failed to analyze image after trying all providers');
     }
 
-    final parsed = _parseJson(responseBody);
+    var parsed = _parseJson(responseBody);
+
+    // Debug: Log the response for troubleshooting
+    print('📋 Full API Response:');
+    print(parsed.toString());
 
     // Check if AI rejected the image as non-agricultural
     if (parsed.containsKey('error') && parsed['error'] == 'NOT_AGRICULTURAL') {
@@ -445,7 +465,73 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
     }
 
     if (!parsed.containsKey('questions')) {
-      throw Exception('Missing "questions" in response');
+      print('❌ Missing questions field. Available keys: ${parsed.keys.toList()}');
+      
+      // Extract from OpenRouter/chat completion format
+      // Structure: response → choices[0] → message → content (contains JSON string)
+      if (parsed.containsKey('choices')) {
+        print('✓ Found choices key');
+        final choices = parsed['choices'];
+        print('  choices type: ${choices.runtimeType}, is List: ${choices is List}');
+        
+        if (choices is List && choices.isNotEmpty) {
+          print('  choices is non-empty list');
+          final choice = choices[0];
+          print('  choice[0] type: ${choice.runtimeType}, is Map: ${choice is Map}');
+          
+          if (choice is Map) {
+            print('  choice is a Map');
+            if (choice.containsKey('message')) {
+              print('  ✓ Found message key in choice');
+              final message = choice['message'];
+              print('    message type: ${message.runtimeType}, is Map: ${message is Map}');
+              
+              if (message is Map && message.containsKey('content')) {
+                print('    ✓ Found content in message');
+                final content = message['content'];
+                print('    content type: ${content.runtimeType}, length: ${content.toString().length}');
+                
+                // Content is a JSON string, try to parse it
+                if (content is String) {
+                  print('    🔍 Content is String, parsing as JSON...');
+                  try {
+                    final innerJson = _parseJson(content);
+                    print('    ✅ Parsed inner JSON');
+                    if (innerJson.containsKey('questions')) {
+                      print('    ✅ Found questions in message content!');
+                      parsed = innerJson;
+                      print('    ✅ Questions extracted successfully!');
+                    } else {
+                      print('    ⚠️ Inner JSON has no questions. Keys: ${innerJson.keys.toList()}');
+                    }
+                  } catch (e) {
+                    print('    ⚠️ Failed to parse message content: $e');
+                  }
+                }
+              } else {
+                print('    ✗ No content found in message');
+              }
+            } else {
+              print('  ✗ No message key in choice');
+            }
+          }
+        }
+      }
+      
+      // Try other common nested formats
+      if (!parsed.containsKey('questions')) {
+        print('  Trying fallback formats...');
+        if (parsed.containsKey('data') && parsed['data'] is Map && parsed['data'].containsKey('questions')) {
+          parsed['questions'] = parsed['data']['questions'];
+          print('  ✅ Found questions in data format');
+        } else if (parsed.containsKey('result') && parsed['result'] is Map && parsed['result'].containsKey('questions')) {
+          parsed['questions'] = parsed['result']['questions'];
+          print('  ✅ Found questions in result format');
+        } else {
+          // If we still don't have questions, throw error with more details
+          throw Exception('Missing "questions" in response. Response keys: ${parsed.keys.toList()}. Full response: ${parsed.toString().substring(0, 500)}');
+        }
+      }
     }
 
     // Add provider information for monitoring
@@ -552,7 +638,7 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
       throw Exception('Failed to classify image after trying all providers');
     }
 
-    final parsed = _parseJson(responseBody);
+    var parsed = _parseJson(responseBody);
 
     // Check if AI rejected the image as non-agricultural
     if (parsed.containsKey('error') && parsed['error'] == 'NOT_AGRICULTURAL') {
@@ -560,7 +646,47 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
     }
 
     if (!parsed.containsKey('tier')) {
-      throw Exception('Missing "tier" in response');
+      print('❌ Missing tier field. Available keys: ${parsed.keys.toList()}');
+      
+      // Extract from OpenRouter/chat completion format
+      if (parsed.containsKey('choices')) {
+        print('✓ Found choices key');
+        final choices = parsed['choices'];
+        
+        if (choices is List && choices.isNotEmpty) {
+          final choice = choices[0];
+          
+          if (choice is Map && choice.containsKey('message')) {
+            final message = choice['message'];
+            
+            if (message is Map && message.containsKey('content')) {
+              final content = message['content'];
+              print('  content type: ${content.runtimeType}');
+              
+              // Content is a JSON string, try to parse it
+              if (content is String) {
+                print('  🔍 Parsing content as JSON...');
+                try {
+                  final innerJson = _parseJson(content);
+                  if (innerJson.containsKey('tier')) {
+                    print('  ✅ Found tier in message content!');
+                    parsed = innerJson;
+                  } else {
+                    print('  ⚠️ Inner JSON has no tier. Keys: ${innerJson.keys.toList()}');
+                  }
+                } catch (e) {
+                  print('  ⚠️ Failed to parse message content: $e');
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      // If still no tier, throw error
+      if (!parsed.containsKey('tier')) {
+        throw Exception('Missing "tier" in response. Available keys: ${parsed.keys.toList()}');
+      }
     }
 
     // Add provider information for monitoring
