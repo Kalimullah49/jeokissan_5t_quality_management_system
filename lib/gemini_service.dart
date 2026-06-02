@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
+import 'package:jeokissan_5t_quality_management_system/commodity_name_mapping.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 // PROVIDER TYPE ENUMERATION
@@ -264,9 +265,9 @@ class GeminiClassificationService {
           headers: headers,
           body: json.encode(payload),
         ).timeout(
-          const Duration(seconds: 60),
+          const Duration(seconds: 90),
           onTimeout: () {
-            throw Exception('Request timeout after 60 seconds');
+            throw Exception('Request timeout after 90 seconds');
           },
         );
 
@@ -274,14 +275,14 @@ class GeminiClassificationService {
 
         // ─ SUCCESS: Status 200 ─
         if (response.statusCode == 200) {
-          debugPrint('✅ Provider $i succeeded');
+          debugPrint('Provider $i succeeded');
           return (200, response.body, i);
         }
 
         // ─ FATAL CLIENT ERRORS: Immediate failure ─
         if (_fatalClientErrorCodes.contains(response.statusCode)) {
           debugPrint(
-            '❌ Provider $i returned fatal client error (${response.statusCode}): ${response.body}',
+            'Provider $i returned fatal client error (${response.statusCode}): ${response.body}',
           );
           throw Exception(
             'Fatal error from ${target.description} (${response.statusCode}): ${response.body}',
@@ -291,7 +292,7 @@ class GeminiClassificationService {
         // ─ FALLBACK ERRORS: Continue to next provider ─
         if (_fallbackStatusCodes.contains(response.statusCode)) {
           debugPrint(
-            '⚠️  Provider $i failed with fallback status (${response.statusCode}), trying next...',
+            'Provider $i failed with fallback status (${response.statusCode}), trying next...',
           );
           lastError = 'Provider ${i + 1} (${target.description}) failed with status ${response.statusCode}: ${response.body}';
           continue; // Try next provider
@@ -299,12 +300,12 @@ class GeminiClassificationService {
 
         // ─ UNEXPECTED STATUS: Log and fallback ─
         debugPrint(
-          '⚠️  Provider $i returned unexpected status (${response.statusCode}), trying next...',
+          'Provider $i returned unexpected status (${response.statusCode}), trying next...',
         );
         lastError = 'Provider ${i + 1} (${target.description}) returned unexpected status ${response.statusCode}';
         continue; // Try next provider
       } catch (e) {
-        debugPrint('❌ Provider $i error: $e');
+        debugPrint(' Provider $i error: $e');
         lastError = 'Provider ${i + 1} (${target.description}) error: $e';
         // Continue to next provider
         continue;
@@ -368,6 +369,8 @@ class GeminiClassificationService {
       throw Exception('Please provide at least one image');
     }
 
+    final String validVarieties = CommodityNameMapping.getAllCommodities().join(', ');
+
     // Build image content parts in OpenAI format (will be converted per provider)
     final List<Map<String, dynamic>> contentParts = [
       {
@@ -407,8 +410,10 @@ If the image does NOT contain an agricultural commodity (e.g., it shows a person
 
 Do NOT process, analyze, or classify any non-agricultural image under any circumstances.
 
+CRITICAL VARIETY RULE: You MUST identify the commodity from this EXACT list of supported varieties: [$validVarieties]. Do NOT invent, guess, or output any variety that is not perfectly matching an item in this list (e.g., do not say "Mango Alphonso"). Match the visual features to the closest variety IN THE LIST. If you absolutely cannot match it to the list, output the general commodity name.
+
 If the image IS an agricultural commodity, look at ${imageBytesList.length > 1 ? "ALL the images" : "the image"} carefully and:
-1. Identify what commodity it is
+1. Identify what commodity it is — DO NOT return a generic name (e.g., "Apple" or "Mango"). Deeply analyze the visual features (shape, size, color, skin texture, surface markings) and output the EXACT specific variety or cultivar from the supported list above.
 2. Do a preliminary visual assessment based on ${imageBytesList.length > 1 ? "all images combined" : "the image"}
 3. Generate 4-5 follow-up questions STRICTLY about the PHYSICAL ATTRIBUTES of the commodity that you cannot fully determine from the ${imageBytesList.length > 1 ? "images" : "image"} alone
 
@@ -428,7 +433,7 @@ DO NOT ask about storage, transport, harvest date, chemical treatment, origin, i
 
 Output ONLY a valid JSON object — no markdown, no code fences (in ${languageCode == 'ur' ? 'Urdu' : 'English'}):
 {
-  "commodity": "<detected commodity name>",
+  "commodity": "<exact specific variety or cultivar name, e.g. 'Mango Sindhri' or 'Apple Kala Kulu'>",
   "preliminary_assessment": "<1-2 sentence visual assessment>",
   "questions": [
     {"id": 1, "question": "<question text>", "type": "dropdown", "options": ["option1", "option2", "option3", "option4"]},

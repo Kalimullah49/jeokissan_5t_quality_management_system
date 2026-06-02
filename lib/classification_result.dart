@@ -6,6 +6,7 @@ import 'package:jeokissan_5t_quality_management_system/app_localizations.dart';
 
 class ClassificationResultScreen extends StatelessWidget {
   final String qualityRating; // e.g., "Excellent", "Very Good", "Good", etc.
+  final String commodityName;
   final List<String> reasons;
   final List<XFile> imageFiles;
   final VoidCallback onDone;
@@ -14,6 +15,7 @@ class ClassificationResultScreen extends StatelessWidget {
   const ClassificationResultScreen({
     super.key,
     required this.qualityRating,
+    required this.commodityName,
     required this.reasons,
     required this.imageFiles,
     required this.onDone,
@@ -88,8 +90,36 @@ class ClassificationResultScreen extends StatelessWidget {
                   color: Colors.black87,
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: const Color(0xFF4CAF50), width: 1.5),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.psychology_alt, color: Color(0xFF2E7D32), size: 22),
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: Text(
+                        'AI Detected: $commodityName',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2E7D32),
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
-              
+
               // Image with Quality Badge
               Stack(
                 clipBehavior: Clip.none,

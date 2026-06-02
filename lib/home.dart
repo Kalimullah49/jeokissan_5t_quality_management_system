@@ -166,6 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                    MaterialPageRoute(
                                      builder: (context) => ClassificationResultScreen(
                                        qualityRating: tier,
+                                       commodityName: result['commodity'] as String? ?? '',
                                        reasons: reasons,
                                        imageFiles: images,
                                        onDone: () {
