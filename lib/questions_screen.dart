@@ -162,7 +162,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha: 0.06),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -195,7 +195,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 border: Border.all(color: Colors.grey[200]!),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
+                    color: Colors.black.withValues(alpha: 0.04),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -220,7 +220,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4285F4).withOpacity(0.1),
+                    color: const Color(0xFF4285F4).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
@@ -328,7 +328,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4285F4),
-                  disabledBackgroundColor: const Color(0xFF4285F4).withOpacity(0.6),
+                  disabledBackgroundColor: const Color(0xFF4285F4).withValues(alpha: 0.6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -357,7 +357,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: _selectedAnswers[index] != null
-              ? const Color(0xFF4285F4).withOpacity(0.3)
+              ? const Color(0xFF4285F4).withValues(alpha: 0.3)
               : Colors.grey[200]!,
         ),
       ),
@@ -411,7 +411,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: _selectedAnswers[index] != null
-                    ? const Color(0xFF4285F4).withOpacity(0.4)
+                    ? const Color(0xFF4285F4).withValues(alpha: 0.4)
                     : Colors.grey[300]!,
               ),
             ),

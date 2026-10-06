@@ -367,7 +367,7 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                                           vertical: 6,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF2C5F2D).withOpacity(0.1),
+                                          color: Color(0xFF2C5F2D).withValues(alpha: 0.1),
                                           border: Border.all(
                                             color: Color(0xFF2C5F2D),
                                             width: 1,
@@ -423,10 +423,10 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                       Container(
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Color(0xFF2C5F2D).withOpacity(0.05),
+                          color: Color(0xFF2C5F2D).withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Color(0xFF2C5F2D).withOpacity(0.2),
+                            color: Color(0xFF2C5F2D).withValues(alpha: 0.2),
                           ),
                         ),
                         child: Text(
@@ -478,7 +478,7 @@ class _QualityManualSearchState extends State<QualityManualSearch> {
                                       vertical: 4,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: tierColors[index].withOpacity(0.15),
+                                      color: tierColors[index].withValues(alpha: 0.15),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(

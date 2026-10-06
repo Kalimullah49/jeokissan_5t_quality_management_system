@@ -134,8 +134,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.white.withOpacity(0.65),
-                Colors.white.withOpacity(0.75),
+                Colors.white.withValues(alpha: 0.65),
+                Colors.white.withValues(alpha: 0.75),
               ],
             ),
           ),
