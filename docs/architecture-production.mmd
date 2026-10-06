@@ -1,0 +1,26 @@
+flowchart TD
+    U[User] --> APP[Flutter app: UI and inspection state]
+    APP <-->|Sign in and ID token| AUTH[Firebase Authentication]
+    CHECK[Firebase App Check / Play Integrity] --> APP
+    APP -->|Authenticated callable operations| API[Firebase Cloud Functions: TypeScript]
+    API --> GATE[Require user, enforce App Check, ownership, validation, quota]
+    GATE --> FLOW[Inspection workflow: analyze, answer, classify]
+    APP -->|Owner-scoped upload after inspection creation| STORE[Private Cloud Storage: temporary images]
+    STORE -->|Validated image bytes| FLOW
+    FLOW <-->|Questions, answers, result, status, usage| DB[Firestore: owner-scoped inspection records]
+    RULES[Versioned commodity grading rules] --> FLOW
+    FLOW --> ROUTER[Provider adapters: deadlines, approved fallback, schema checks]
+    SECRETS[Secret Manager: server-only keys] --> ROUTER
+    ROUTER <-->|Image and prompt; JSON result| AI[Approved and tested AI providers]
+    FLOW -->|Validated response or operation status| API
+    API --> APP
+    FLOW --> OBS[Redacted logs, latency, cost, failure alerts]
+    DELETE[Account deletion and retention cleanup] --> DB
+    DELETE --> STORE
+    DELETE --> AUTH
+    classDef client fill:#eaf3ff,stroke:#2563eb,color:#10233f
+    classDef backend fill:#eef8ed,stroke:#388643,color:#16341b
+    classDef data fill:#faf2ff,stroke:#9333ea,color:#4a1766
+    class APP,U client
+    class AUTH,CHECK,API,GATE,FLOW,ROUTER,AI,OBS,DELETE backend
+    class STORE,DB,RULES,SECRETS data

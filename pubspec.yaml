@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: ^2.5.4
   google_fonts: ^8.0.2
   image: ^4.8.0
+  flutter_dotenv: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ flutter:
     - assets/images/
     - assets/quality_manual_data.json
     - assets/quality_manual_data_urdu.json
+    - .env
 
   fonts:
     - family: JameelNooriNastaleeq

@@ -1,22 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
 import 'package:jeokissan_5t_quality_management_system/commodity_name_mapping.dart';
 
-// ════════════════════════════════════════════════════════════════════════════
-// PROVIDER TYPE ENUMERATION
-// ════════════════════════════════════════════════════════════════════════════
-
-/// Provider type identification for fallback mechanism
 enum ProviderType { openRouter, googleAI, groq }
 
-// ════════════════════════════════════════════════════════════════════════════
-// PROVIDER TARGET CONFIGURATION
-// ════════════════════════════════════════════════════════════════════════════
-
-/// Represents a single API provider target with endpoint, model, and authentication
 class ProviderTarget {
   final ProviderType type;
   final String endpoint;
@@ -38,74 +30,63 @@ class ProviderTarget {
 // ════════════════════════════════════════════════════════════════════════════
 
 class GeminiClassificationService {
-  // ────────────────────────────────────────────────────────────────────────────
-  // MULTI-LEVEL FALLBACK PROVIDER CONFIGURATION
-  // ────────────────────────────────────────────────────────────────────────────
-
-  /// Fallback targets in priority order (Target 1 → Target 2 → Target 3)
-  static final List<ProviderTarget> _providerTargets = [
-    // TARGET 1: OpenRouter (Gemini 2.0 Flash)
+  static List<ProviderTarget> get _providerTargets {
+    var list = [
     ProviderTarget(
-      type: ProviderType.openRouter,
-      endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-      model: 'google/gemini-2.0-flash-001',
-      apiKey: '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', // PLACEHOLDER: Replace with actual key
-      description: 'OpenRouter (Gemini 2.0 Flash)',
+    type: ProviderType.openRouter,
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    model: 'google/gemma-4-31b-it:free',
+    apiKey: dotenv.env['OPENROUTER_API_KEY']?.trim() ?? '',
+    description: 'OpenRouter - Gemma 4 31B Free',
     ),
-    // TARGET 2: Google AI Studio (Gemini 2.0 Flash via REST)
     ProviderTarget(
       type: ProviderType.googleAI,
-      endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-      model: 'gemini-2.0-flash',
-      apiKey: 'AIzaSyCxfi1vczNp5hIo4rE40f5aESEciUQxFHQ', // PLACEHOLDER: Replace with actual key
-      description: 'Google AI Studio (Gemini 2.0 Flash)',
+      endpoint:
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent',
+      model: 'gemini-3.1-flash-lite',
+      apiKey: dotenv.env['GEMINI_API_KEY']?.trim() ?? '',
+      description: 'Google Gemini',
     ),
-    // TARGET 3: Groq Cloud (Llama 3.2 90B Vision)
     ProviderTarget(
       type: ProviderType.groq,
       endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-      model: 'llama-3.2-90b-vision-preview',
-      apiKey: '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', // PLACEHOLDER: Replace with actual key
-      description: 'Groq Cloud (Llama 3.2 90B Vision)',
+      model: 'qwen/qwen3.8-27b',
+      apiKey: dotenv.env['GROQ_API_KEY']?.trim() ?? '',
+      description: 'Groq',
     ),
   ];
-
-  /// Status codes that trigger fallback behavior (transient server errors)
-  static const List<int> _fallbackStatusCodes = [429, 500, 502, 503, 504];
-
-  /// Status codes that cause immediate failure without fallback (fatal client errors)
-  static const List<int> _fatalClientErrorCodes = [400, 401, 403, 404];
+    return list;
+  }
 
   // ────────────────────────────────────────────────────────────────────────────
   // HELPER: IMAGE COMPRESSION
   // ────────────────────────────────────────────────────────────────────────────
 
   /// Compress image to reduce payload size and improve API call speed
-  static Uint8List _compressImage(Uint8List bytes, {int maxWidth = 800, int quality = 70}) {
-    try {
-      final decoded = img.decodeImage(bytes);
-      if (decoded == null) return bytes;
-
-      // Only resize if larger than maxWidth
-      img.Image resized;
-      if (decoded.width > maxWidth || decoded.height > maxWidth) {
-        resized = img.copyResize(
-          decoded,
-          width: decoded.width > decoded.height ? maxWidth : null,
-          height: decoded.height >= decoded.width ? maxWidth : null,
-          interpolation: img.Interpolation.linear,
-        );
-      } else {
-        resized = decoded;
-      }
-
-      // Encode as JPEG with quality setting
-      final compressed = img.encodeJpg(resized, quality: quality);
-      return Uint8List.fromList(compressed);
-    } catch (_) {
-      // If compression fails, return original bytes
-      return bytes;
+  static Uint8List _compressImage(
+    Uint8List bytes, {
+    int maxWidth = 800,
+    int quality = 70,
+  }) {
+    if (bytes.isEmpty) {
+      throw const FormatException('An image is empty.');
     }
+    final decoded = img.decodeImage(bytes);
+    if (decoded == null) {
+      throw const FormatException(
+        'Could not read an image. Use a supported image format.',
+      );
+    }
+    final oriented = img.bakeOrientation(decoded);
+    final resized = max(oriented.width, oriented.height) > maxWidth
+        ? img.copyResize(
+            oriented,
+            width: oriented.width >= oriented.height ? maxWidth : null,
+            height: oriented.height > oriented.width ? maxWidth : null,
+            interpolation: img.Interpolation.linear,
+          )
+        : oriented;
+    return Uint8List.fromList(img.encodeJpg(resized, quality: quality));
   }
 
   // ────────────────────────────────────────────────────────────────────────────
@@ -138,96 +119,170 @@ class GeminiClassificationService {
         }
       }
       print('❌ No JSON found in response');
-      print('Response text preview: ${text.substring(0, min(500, text.length))}...');
+      print(
+        'Response text preview: ${text.substring(0, min(500, text.length))}...',
+      );
       throw Exception('Failed to parse response: No JSON found');
     }
   }
 
   // ────────────────────────────────────────────────────────────────────────────
-  // HELPER: DYNAMIC PAYLOAD GENERATION (Provider-Specific)
+  // HELPER: PROVIDER-SPECIFIC REQUEST FORMATTING
   // ────────────────────────────────────────────────────────────────────────────
 
-  /// Generate provider-specific request payload based on provider type
   static Map<String, dynamic> _buildRequestPayload({
     required ProviderType providerType,
     required String model,
     required String systemPrompt,
     required List<Map<String, dynamic>> contentParts,
-    int? maxTokens,
-    double temperature = 0.2,
+    required int maxTokens,
+    required double temperature,
   }) {
-    switch (providerType) {
-      // ─ OpenAI-compatible format (OpenRouter, Groq) ─
+    if (providerType == ProviderType.googleAI) {
+      final parts = <Map<String, dynamic>>[];
+      for (final part in contentParts) {
+        if (part['type'] == 'text') {
+          parts.add({'text': part['text']});
+        } else if (part['type'] == 'image_url') {
+          final uri = Uri.parse(part['image_url']['url'] as String).data;
+          if (uri == null) {
+            throw const FormatException('Invalid inline image data.');
+          }
+          parts.add({
+            'inlineData': {
+              'mimeType': uri.mimeType,
+              'data': base64Encode(uri.contentAsBytes()),
+            },
+          });
+        }
+      }
+      return {
+        'systemInstruction': {
+          'parts': [
+            {'text': systemPrompt},
+          ],
+        },
+        'contents': [
+          {'role': 'user', 'parts': parts},
+        ],
+        'generationConfig': {
+          'maxOutputTokens': maxTokens,
+          'temperature': temperature,
+          'responseMimeType': 'application/json',
+          'thinkingConfig': {'thinkingBudget': 0},
+        },
+      };
+    }
+
+    return {
+      'model': model,
+      'messages': [
+        {'role': 'system', 'content': systemPrompt},
+        {'role': 'user', 'content': contentParts},
+      ],
+      if (providerType == ProviderType.groq)
+        'max_completion_tokens': maxTokens
+      else
+        'max_tokens': maxTokens,
+      'temperature': temperature,
+      'response_format': {'type': 'json_object'},
+    };
+  }
+
+  static String _decodeResponse(String body, ProviderType providerType) {
+    final envelope = json.decode(body) as Map<String, dynamic>;
+    if (providerType == ProviderType.googleAI) {
+      final candidates = envelope['candidates'];
+      if (candidates is! List || candidates.isEmpty) {
+        throw const FormatException('Gemini returned no response candidate.');
+      }
+      final candidate = candidates.first as Map;
+      final parts = candidate['content']?['parts'];
+      if (candidate['finishReason'] != 'STOP' || parts is! List) {
+        throw const FormatException('Gemini returned an incomplete response.');
+      }
+      final text = parts
+          .whereType<Map>()
+          .where((part) => part['thought'] != true && part['text'] is String)
+          .map((part) => part['text'] as String)
+          .join();
+      if (text.trim().isEmpty) {
+        throw const FormatException('Gemini returned no text.');
+      }
+      return text;
+    }
+
+    final choices = envelope['choices'];
+    if (choices is! List || choices.isEmpty) {
+      throw const FormatException('Provider returned no response choices.');
+    }
+    final choice = choices.first as Map;
+    final content = choice['message']?['content'];
+    if (choice['finish_reason'] != 'stop' ||
+        content is! String ||
+        content.trim().isEmpty) {
+      throw const FormatException('Provider returned an incomplete response.');
+    }
+    return content;
+  }
+
+  static Map<String, String> _buildRequestHeaders(ProviderTarget target) {
+    switch (target.type) {
+      case ProviderType.googleAI:
+        return {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': target.apiKey,
+        };
       case ProviderType.openRouter:
+        return {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${target.apiKey}',
+          'HTTP-Referer': 'https://jeokissan-quality-manual.web.app',
+          'X-Title': 'JeoKissan QMS',
+        };
       case ProviderType.groq:
         return {
-          'model': model,
-          'messages': [
-            {
-              'role': 'system',
-              'content': systemPrompt,
-            },
-            {
-              'role': 'user',
-              'content': contentParts,
-            },
-          ],
-          'max_tokens': ?maxTokens,
-          'temperature': temperature,
-        };
-
-      // ─ Google Gemini REST format ─
-      case ProviderType.googleAI:
-        // Convert OpenAI format to Gemini format
-        final List<Map<String, dynamic>> parts = [];
-
-        // Add system prompt as the first text part
-        parts.add({
-          'text': systemPrompt,
-        });
-
-        // Convert content parts from OpenAI format to Gemini format
-        for (final part in contentParts) {
-          if (part['type'] == 'text') {
-            parts.add({'text': part['text']});
-          } else if (part['type'] == 'image_url') {
-            final imageUrl = part['image_url']['url'] as String;
-            if (imageUrl.startsWith('data:image')) {
-              // Parse data URI: data:image/jpeg;base64,<base64_string>
-              final dataParts = imageUrl.split(',');
-              if (dataParts.length == 2) {
-                final mimeTypePart = dataParts[0]; // data:image/jpeg;base64
-                final base64Data = dataParts[1];
-                final mimeType = mimeTypePart.split(';')[0].replaceFirst('data:', '');
-
-                parts.add({
-                  'inline_data': {
-                    'mime_type': mimeType,
-                    'data': base64Data,
-                  },
-                });
-              }
-            }
-          }
-        }
-
-        return {
-          'contents': [
-            {
-              'parts': parts,
-            },
-          ],
-          'generationConfig': {
-            'maxOutputTokens': ?maxTokens,
-            'temperature': temperature,
-          },
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${target.apiKey}',
         };
     }
   }
 
-  // ────────────────────────────────────────────────────────────────────────────
-  // HELPER: MULTI-LEVEL FALLBACK HTTP REQUEST
-  // ────────────────────────────────────────────────────────────────────────────
+  static String _httpFailureMessage(
+    http.Response response,
+    ProviderTarget target,
+  ) {
+    final hint = switch (response.statusCode) {
+      400 => 'request rejected; check API key, model, and request format',
+      401 => 'API key rejected; create a valid key and check that it is active',
+      403 => 'access denied; check provider permissions and model access',
+      404 => 'model or endpoint not found',
+      429 => 'provider quota or rate limit reached',
+      >= 500 => 'provider service error',
+      _ => 'provider rejected the request',
+    };
+
+    var detail = '';
+    try {
+      final body = jsonDecode(utf8.decode(response.bodyBytes));
+      final error = body is Map ? body['error'] : null;
+      final message = error is Map ? error['message'] : null;
+      if (message is String && message.trim().isNotEmpty) {
+        detail = message
+            .replaceAll(target.apiKey, '[redacted]')
+            .replaceAll(RegExp(r'[\r\n]+'), ' ')
+            .trim();
+        if (detail.length > 240) {
+          detail = '${detail.substring(0, 240)}...';
+        }
+      }
+    } on FormatException {
+      // Some providers return non-JSON errors; the HTTP hint is still useful.
+    }
+
+    return '${target.description}: HTTP ${response.statusCode} ($hint)'
+        '${detail.isEmpty ? '' : ' — $detail'}';
+  }
 
   /// Execute HTTP request with multi-level fallback logic
   /// Returns: (statusCode, responseBody, providerIndex)
@@ -237,117 +292,88 @@ class GeminiClassificationService {
     int? maxTokens,
     double temperature = 0.2,
   }) async {
-    String lastError = '';
+    final failures = <String>[];
+    final imageCount = contentParts
+        .where((part) => part['type'] == 'image_url')
+        .length;
+    if (imageCount < 1 || imageCount > 4) {
+      throw const FormatException('Please provide between 1 and 4 images.');
+    }
 
-    // Iterate through provider targets in priority order
-    for (int i = 0; i < _providerTargets.length; i++) {
-      final target = _providerTargets[i];
-
-      try {
-        debugPrint('🔄 Attempting Provider $i: ${target.description}');
-
-        // Build provider-specific payload
-        final payload = _buildRequestPayload(
-          providerType: target.type,
-          model: target.model,
-          systemPrompt: systemPrompt,
-          contentParts: contentParts,
-          maxTokens: maxTokens,
-          temperature: temperature,
-        );
-
-        // Build provider-specific headers
-        final headers = _buildRequestHeaders(target.type, target.apiKey);
-
-        // Make the HTTP request
-        final response = await http.post(
-          Uri.parse(target.endpoint),
-          headers: headers,
-          body: json.encode(payload),
-        ).timeout(
-          const Duration(seconds: 90),
-          onTimeout: () {
-            throw Exception('Request timeout after 90 seconds');
-          },
-        );
-
-        debugPrint('📊 Provider $i response status: ${response.statusCode}');
-
-        // ─ SUCCESS: Status 200 ─
-        if (response.statusCode == 200) {
-          debugPrint('Provider $i succeeded');
-          return (200, response.body, i);
-        }
-
-        // ─ FATAL CLIENT ERRORS: Immediate failure ─
-        if (_fatalClientErrorCodes.contains(response.statusCode)) {
-          debugPrint(
-            'Provider $i returned fatal client error (${response.statusCode}): ${response.body}',
-          );
-          throw Exception(
-            'Fatal error from ${target.description} (${response.statusCode}): ${response.body}',
-          );
-        }
-
-        // ─ FALLBACK ERRORS: Continue to next provider ─
-        if (_fallbackStatusCodes.contains(response.statusCode)) {
-          debugPrint(
-            'Provider $i failed with fallback status (${response.statusCode}), trying next...',
-          );
-          lastError = 'Provider ${i + 1} (${target.description}) failed with status ${response.statusCode}: ${response.body}';
-          continue; // Try next provider
-        }
-
-        // ─ UNEXPECTED STATUS: Log and fallback ─
+    for (var index = 0; index < _providerTargets.length; index++) {
+      final target = _providerTargets[index];
+      if (target.apiKey.isEmpty) {
+        final keyName = switch (target.type) {
+          ProviderType.openRouter => 'OPENROUTER_API_KEY',
+          ProviderType.googleAI => 'GEMINI_API_KEY',
+          ProviderType.groq => 'GROQ_API_KEY',
+        };
         debugPrint(
-          'Provider $i returned unexpected status (${response.statusCode}), trying next...',
+          '${target.description} skipped: $keyName is missing from .env',
         );
-        lastError = 'Provider ${i + 1} (${target.description}) returned unexpected status ${response.statusCode}';
-        continue; // Try next provider
-      } catch (e) {
-        debugPrint(' Provider $i error: $e');
-        lastError = 'Provider ${i + 1} (${target.description}) error: $e';
-        // Continue to next provider
+        failures.add(
+          '${target.description}: $keyName is missing from the project-root .env. '
+          'Add it there and fully restart Flutter.',
+        );
         continue;
+      }
+      if (target.type == ProviderType.groq && imageCount > 3) {
+        failures.add('${target.description}: supports at most 3 images');
+        continue;
+      }
+
+      final client = http.Client();
+      try {
+        debugPrint('Trying ${target.description} (provider $index)');
+        final response = await client
+            .post(
+              Uri.parse(target.endpoint),
+              headers: _buildRequestHeaders(target),
+              body: jsonEncode(
+                _buildRequestPayload(
+                  providerType: target.type,
+                  model: target.model,
+                  systemPrompt: systemPrompt,
+                  contentParts: contentParts,
+                  maxTokens: maxTokens ?? 1024,
+                  temperature: temperature,
+                ),
+              ),
+            )
+            .timeout(const Duration(seconds: 90));
+
+        if (response.statusCode != 200) {
+          debugPrint(
+            '${target.description} failed with HTTP ${response.statusCode}',
+          );
+          failures.add(_httpFailureMessage(response, target));
+          continue;
+        }
+
+        final body = utf8.decode(response.bodyBytes);
+        final text = _decodeResponse(body, target.type);
+        _parseJson(text);
+        return (200, text, index);
+      } on FormatException {
+        debugPrint('${target.description} returned an invalid response');
+        failures.add('${target.description}: invalid response');
+      } on http.ClientException {
+        debugPrint('${target.description} network request failed');
+        failures.add('${target.description}: network request failed');
+      } on TimeoutException {
+        debugPrint('${target.description} request timed out');
+        failures.add('${target.description}: request timed out');
+      } catch (error) {
+        debugPrint(
+          '${target.description} request failed: ${error.runtimeType}',
+        );
+        failures.add('${target.description}: request failed');
+      } finally {
+        client.close();
       }
     }
 
-    // ─ ALL PROVIDERS FAILED ─
-    throw Exception(
-      'All AI providers are currently unavailable. Last error: $lastError',
-    );
-  }
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // HELPER: BUILD PROVIDER-SPECIFIC HEADERS
-  // ────────────────────────────────────────────────────────────────────────────
-
-  /// Build HTTP headers specific to each provider
-  static Map<String, String> _buildRequestHeaders(
-    ProviderType providerType,
-    String apiKey,
-  ) {
-    switch (providerType) {
-      case ProviderType.openRouter:
-        return {
-          'Authorization': 'Bearer $apiKey',
-          'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://jeokissan-quality-manual.web.app',
-          'X-Title': 'JeoKissan QMS',
-        };
-
-      case ProviderType.googleAI:
-        return {
-          'Content-Type': 'application/json',
-          // API key is passed as query parameter in the URL
-        };
-
-      case ProviderType.groq:
-        return {
-          'Authorization': 'Bearer $apiKey',
-          'Content-Type': 'application/json',
-        };
-    }
+    throw Exception('No AI provider succeeded. ${failures.join('; ')}');
   }
 
   // ════════════════════════════════════════════════════════════════════════════
@@ -368,30 +394,40 @@ class GeminiClassificationService {
     if (imageBytesList.isEmpty) {
       throw Exception('Please provide at least one image');
     }
+    if (imageBytesList.length > 4) {
+      throw const FormatException('Please provide no more than 4 images.');
+    }
 
-    final String validVarieties = CommodityNameMapping.getAllCommodities().join(', ');
+    final String validVarieties = CommodityNameMapping.getAllCommodities().join(
+      ', ',
+    );
 
     // Build image content parts in OpenAI format (will be converted per provider)
     final List<Map<String, dynamic>> contentParts = [
       {
         'type': 'text',
-        'text': 'Analyze ${imageBytesList.length > 1 ? "these ${imageBytesList.length} images of the same commodity" : "this commodity image"} and generate follow-up questions to help determine its quality tier accurately. Return ONLY valid JSON.',
+        'text':
+            'Analyze ${imageBytesList.length > 1 ? "these ${imageBytesList.length} images of the same commodity" : "this commodity image"} and generate follow-up questions to help determine its quality tier accurately. Return ONLY valid JSON.',
       },
     ];
 
+    var encodedImageCharacters = 0;
     for (int i = 0; i < imageBytesList.length; i++) {
       // Compress image to reduce payload size and speed up API call
       final compressed = _compressImage(imageBytesList[i]);
       final base64Image = base64Encode(compressed);
+      encodedImageCharacters += base64Image.length;
+      if (encodedImageCharacters > 7000000) {
+        throw const FormatException('Combined image data is too large.');
+      }
       contentParts.add({
         'type': 'image_url',
-        'image_url': {
-          'url': 'data:image/jpeg;base64,$base64Image',
-        },
+        'image_url': {'url': 'data:image/jpeg;base64,$base64Image'},
       });
     }
 
-    final systemPrompt = '''You are an expert post-harvest quality analyst for agricultural commodities.
+    final systemPrompt =
+        '''You are an expert post-harvest quality analyst for agricultural commodities.
 
 RESPONSE LANGUAGE: ${languageCode == 'ur' ? 'Urdu (اردو)' : 'English'}
 
@@ -447,7 +483,11 @@ Output ONLY a valid JSON object — no markdown, no code fences (in ${languageCo
 IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array with 3-5 relevant answer choices. Make options specific and descriptive for the commodity. ${languageCode == 'ur' ? 'تمام سوالات اور جوابات اردو میں ہوں۔' : 'All questions and answers must be in the specified language.'}''';
 
     // Execute with multi-level fallback
-    final (statusCode, responseBody, providerIndex) = await _executeWithFallback(
+    final (
+      statusCode,
+      responseBody,
+      providerIndex,
+    ) = await _executeWithFallback(
       systemPrompt: systemPrompt,
       contentParts: contentParts,
       maxTokens: 700,
@@ -466,36 +506,49 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
 
     // Check if AI rejected the image as non-agricultural
     if (parsed.containsKey('error') && parsed['error'] == 'NOT_AGRICULTURAL') {
-      throw Exception(parsed['message'] ?? 'This is not an agricultural commodity image. Please upload a fruit, vegetable, grain, or other farm produce.');
+      throw Exception(
+        parsed['message'] ??
+            'This is not an agricultural commodity image. Please upload a fruit, vegetable, grain, or other farm produce.',
+      );
     }
 
     if (!parsed.containsKey('questions')) {
-      print('❌ Missing questions field. Available keys: ${parsed.keys.toList()}');
-      
+      print(
+        '❌ Missing questions field. Available keys: ${parsed.keys.toList()}',
+      );
+
       // Extract from OpenRouter/chat completion format
       // Structure: response → choices[0] → message → content (contains JSON string)
       if (parsed.containsKey('choices')) {
         print('✓ Found choices key');
         final choices = parsed['choices'];
-        print('  choices type: ${choices.runtimeType}, is List: ${choices is List}');
-        
+        print(
+          '  choices type: ${choices.runtimeType}, is List: ${choices is List}',
+        );
+
         if (choices is List && choices.isNotEmpty) {
           print('  choices is non-empty list');
           final choice = choices[0];
-          print('  choice[0] type: ${choice.runtimeType}, is Map: ${choice is Map}');
-          
+          print(
+            '  choice[0] type: ${choice.runtimeType}, is Map: ${choice is Map}',
+          );
+
           if (choice is Map) {
             print('  choice is a Map');
             if (choice.containsKey('message')) {
               print('  ✓ Found message key in choice');
               final message = choice['message'];
-              print('    message type: ${message.runtimeType}, is Map: ${message is Map}');
-              
+              print(
+                '    message type: ${message.runtimeType}, is Map: ${message is Map}',
+              );
+
               if (message is Map && message.containsKey('content')) {
                 print('    ✓ Found content in message');
                 final content = message['content'];
-                print('    content type: ${content.runtimeType}, length: ${content.toString().length}');
-                
+                print(
+                  '    content type: ${content.runtimeType}, length: ${content.toString().length}',
+                );
+
                 // Content is a JSON string, try to parse it
                 if (content is String) {
                   print('    🔍 Content is String, parsing as JSON...');
@@ -507,7 +560,9 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
                       parsed = innerJson;
                       print('    ✅ Questions extracted successfully!');
                     } else {
-                      print('    ⚠️ Inner JSON has no questions. Keys: ${innerJson.keys.toList()}');
+                      print(
+                        '    ⚠️ Inner JSON has no questions. Keys: ${innerJson.keys.toList()}',
+                      );
                     }
                   } catch (e) {
                     print('    ⚠️ Failed to parse message content: $e');
@@ -522,19 +577,25 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
           }
         }
       }
-      
+
       // Try other common nested formats
       if (!parsed.containsKey('questions')) {
         print('  Trying fallback formats...');
-        if (parsed.containsKey('data') && parsed['data'] is Map && parsed['data'].containsKey('questions')) {
+        if (parsed.containsKey('data') &&
+            parsed['data'] is Map &&
+            parsed['data'].containsKey('questions')) {
           parsed['questions'] = parsed['data']['questions'];
           print('  ✅ Found questions in data format');
-        } else if (parsed.containsKey('result') && parsed['result'] is Map && parsed['result'].containsKey('questions')) {
+        } else if (parsed.containsKey('result') &&
+            parsed['result'] is Map &&
+            parsed['result'].containsKey('questions')) {
           parsed['questions'] = parsed['result']['questions'];
           print('  ✅ Found questions in result format');
         } else {
           // If we still don't have questions, throw error with more details
-          throw Exception('Missing "questions" in response. Response keys: ${parsed.keys.toList()}. Full response: ${parsed.toString().substring(0, 500)}');
+          throw Exception(
+            'Missing "questions" in response. Response keys: ${parsed.keys.toList()}. Full response: ${parsed.toString().substring(0, 500)}',
+          );
         }
       }
     }
@@ -568,6 +629,9 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
     if (imageBytesList.isEmpty) {
       throw Exception('Please provide at least one image');
     }
+    if (imageBytesList.length > 4) {
+      throw const FormatException('Please provide no more than 4 images.');
+    }
 
     // Format Q&A for the prompt
     final qaText = questionsAndAnswers
@@ -578,23 +642,28 @@ IMPORTANT: Every question MUST have "type": "dropdown" and an "options" array wi
     final List<Map<String, dynamic>> contentParts = [
       {
         'type': 'text',
-        'text': 'Here ${imageBytesList.length > 1 ? "are ${imageBytesList.length} images of the same" : "is the"} commodity and the user\'s answers to the follow-up questions.\n\nCommodity: $commodity\n\n$qaText\n\nNow give the FINAL 5-tier quality classification based on ${imageBytesList.length > 1 ? "all images" : "the image"} and these answers. Return ONLY valid JSON.',
+        'text':
+            'Here ${imageBytesList.length > 1 ? "are ${imageBytesList.length} images of the same" : "is the"} commodity and the user\'s answers to the follow-up questions.\n\nCommodity: $commodity\n\n$qaText\n\nNow give the FINAL 5-tier quality classification based on ${imageBytesList.length > 1 ? "all images" : "the image"} and these answers. Return ONLY valid JSON.',
       },
     ];
 
+    var encodedImageCharacters = 0;
     for (int i = 0; i < imageBytesList.length; i++) {
       // Compress image to reduce payload size and speed up API call
       final compressed = _compressImage(imageBytesList[i]);
       final base64Image = base64Encode(compressed);
+      encodedImageCharacters += base64Image.length;
+      if (encodedImageCharacters > 7000000) {
+        throw const FormatException('Combined image data is too large.');
+      }
       contentParts.add({
         'type': 'image_url',
-        'image_url': {
-          'url': 'data:image/jpeg;base64,$base64Image',
-        },
+        'image_url': {'url': 'data:image/jpeg;base64,$base64Image'},
       });
     }
 
-    final systemPrompt = '''You are an expert post-harvest quality analyst for agricultural commodities.
+    final systemPrompt =
+        '''You are an expert post-harvest quality analyst for agricultural commodities.
 
 RESPONSE LANGUAGE: ${languageCode == 'ur' ? 'Urdu (اردو)' : 'English'}
 
@@ -632,7 +701,11 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
 }''';
 
     // Execute with multi-level fallback
-    final (statusCode, responseBody, providerIndex) = await _executeWithFallback(
+    final (
+      statusCode,
+      responseBody,
+      providerIndex,
+    ) = await _executeWithFallback(
       systemPrompt: systemPrompt,
       contentParts: contentParts,
       maxTokens: 512,
@@ -647,27 +720,29 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
 
     // Check if AI rejected the image as non-agricultural
     if (parsed.containsKey('error') && parsed['error'] == 'NOT_AGRICULTURAL') {
-      throw Exception(parsed['message'] ?? 'This is not an agricultural commodity image.');
+      throw Exception(
+        parsed['message'] ?? 'This is not an agricultural commodity image.',
+      );
     }
 
     if (!parsed.containsKey('tier')) {
       print('❌ Missing tier field. Available keys: ${parsed.keys.toList()}');
-      
+
       // Extract from OpenRouter/chat completion format
       if (parsed.containsKey('choices')) {
         print('✓ Found choices key');
         final choices = parsed['choices'];
-        
+
         if (choices is List && choices.isNotEmpty) {
           final choice = choices[0];
-          
+
           if (choice is Map && choice.containsKey('message')) {
             final message = choice['message'];
-            
+
             if (message is Map && message.containsKey('content')) {
               final content = message['content'];
               print('  content type: ${content.runtimeType}');
-              
+
               // Content is a JSON string, try to parse it
               if (content is String) {
                 print('  🔍 Parsing content as JSON...');
@@ -677,7 +752,9 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
                     print('  ✅ Found tier in message content!');
                     parsed = innerJson;
                   } else {
-                    print('  ⚠️ Inner JSON has no tier. Keys: ${innerJson.keys.toList()}');
+                    print(
+                      '  ⚠️ Inner JSON has no tier. Keys: ${innerJson.keys.toList()}',
+                    );
                   }
                 } catch (e) {
                   print('  ⚠️ Failed to parse message content: $e');
@@ -687,10 +764,12 @@ Required JSON schema (${languageCode == 'ur' ? 'Urdu' : 'English'}):
           }
         }
       }
-      
+
       // If still no tier, throw error
       if (!parsed.containsKey('tier')) {
-        throw Exception('Missing "tier" in response. Available keys: ${parsed.keys.toList()}');
+        throw Exception(
+          'Missing "tier" in response. Available keys: ${parsed.keys.toList()}',
+        );
       }
     }
 

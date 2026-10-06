@@ -1,0 +1,29 @@
+flowchart TD
+    U[User] --> A[Flutter app]
+    A <-->|Register, login, reset, sign out| AUTH[Firebase Authentication]
+    A --> P[Camera or gallery: ImagePicker]
+    P --> V[Local image preview]
+    V -->|Classify| H[home.dart: workflow orchestration]
+    H --> S[gemini_service.dart: runs on the device]
+    ENV[Bundled .env: provider API keys] -.-> S
+    S --> C[Decode and orient images; resize to 800 px; JPEG 70; Base64]
+    C --> O[OpenRouter: first attempt]
+    O -->|Failure or invalid response| G[Google Gemini: second attempt]
+    G -->|Failure or invalid response| Q[Groq: third attempt]
+    O -->|Success| J[Parse provider response and JSON]
+    G -->|Success| J
+    Q -->|Success| J
+    Q -->|Failure| E[Error shown in app]
+    J -->|Step 1| F[Commodity, assessment, 4-5 follow-up questions]
+    F --> W[User selects answers]
+    W -->|Step 2: original images plus answers; new request| S
+    J -->|Step 2| R[Final quality tier, commodity and reasons]
+    A --> M[Quality Manual search]
+    M --> L[Bundled English and Urdu JSON files]
+    A --> PREF[SharedPreferences: saved language]
+    classDef client fill:#eaf3ff,stroke:#2563eb,color:#10233f
+    classDef external fill:#eef8ed,stroke:#388643,color:#16341b
+    classDef risk fill:#fff1ed,stroke:#c2410c,color:#7c2d12
+    class A,P,V,H,S,C,J,F,W,R,M,L,PREF client
+    class AUTH,O,G,Q external
+    class ENV,E risk
