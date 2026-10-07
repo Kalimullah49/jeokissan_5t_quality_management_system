@@ -33,13 +33,6 @@ class GeminiClassificationService {
   static List<ProviderTarget> get _providerTargets {
     var list = [
     ProviderTarget(
-    type: ProviderType.openRouter,
-    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    model: 'google/gemma-4-31b-it:free',
-    apiKey: dotenv.env['OPENROUTER_API_KEY']?.trim() ?? '',
-    description: 'OpenRouter - Gemma 4 31B Free',
-    ),
-    ProviderTarget(
       type: ProviderType.googleAI,
       endpoint:
           'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent',
@@ -48,11 +41,25 @@ class GeminiClassificationService {
       description: 'Google Gemini',
     ),
     ProviderTarget(
-      type: ProviderType.groq,
-      endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-      model: 'qwen/qwen3.8-27b',
-      apiKey: dotenv.env['GROQ_API_KEY']?.trim() ?? '',
-      description: 'Groq',
+    type: ProviderType.openRouter,
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    model: 'google/gemma-4-31b-it:free',
+    apiKey: dotenv.env['OPENROUTER_API_KEY']?.trim() ?? '',
+    description: 'OpenRouter - Gemma 4 31B Free',
+    ),
+    ProviderTarget(
+    type: ProviderType.openRouter,
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    model: 'google/gemma-4-31b-it:free',
+    apiKey: dotenv.env['OPENROUTER_API_KEY']?.trim() ?? '',
+    description: 'OpenRouter - Gemma 4 31B Free',
+    ),
+    ProviderTarget(
+    type: ProviderType.groq,
+    endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+    model: 'llama-3.3-70b-versatile',
+    apiKey: dotenv.env['GROQ_API_KEY']?.trim() ?? '',
+    description: 'Groq',
     ),
   ];
     return list;
